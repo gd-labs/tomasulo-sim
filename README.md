@@ -57,6 +57,8 @@ To track wheater an operand value is available on the register or if it is curre
         - for reservation station, the next instruction to excecuted is arbitrary, usually using FIFO
         - load/store instructions are always executed in order
 
+4. **Write Result**: write result to all awaiting stations and register file.
+
 
 ## Files
 
