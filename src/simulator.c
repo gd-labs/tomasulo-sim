@@ -1,16 +1,16 @@
-#include <string.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-#include "simulator.h"
 #include "instruction.h"
+#include "simulator.h"
 #include "station.h"
 
 PRIVATE Station* _find_station(Inst* inst, SList* rs)
 {
-    for(size_t i = 0; i < rs->count; i++) {
-        if(rs->data[i].type == inst->class) {
-            if(!rs->data[i].busy) {
+    for (size_t i = 0; i < rs->count; i++) {
+        if (rs->data[i].type == inst->class) {
+            if (!rs->data[i].busy) {
                 return &rs->data[i];
             }
         }
@@ -18,24 +18,24 @@ PRIVATE Station* _find_station(Inst* inst, SList* rs)
     return NULL;
 }
 
-PRIVATE void _fill_station(Station* st, Inst* inst, 
-            				char* reg_names[], char* reg_contents[])
+PRIVATE void _fill_station(Station* st, Inst* inst,
+    char* reg_names[], char* reg_contents[])
 {
     st->busy = true;
     st->op = inst;
-    reg_contents[inst->rd >>1] = st->name;
+    reg_contents[inst->rd >> 1] = st->name;
 
     if (inst->class != Mem) {
-        if (! strcmp(reg_contents[inst->rs1 >>1], "")) {
-            st->vj = reg_names[inst->rs1 >>1];
+        if (!strcmp(reg_contents[inst->rs1 >> 1], "")) {
+            st->vj = reg_names[inst->rs1 >> 1];
         } else {
-            st->qj = reg_contents[inst->rs1 >>1];     
+            st->qj = reg_contents[inst->rs1 >> 1];
         }
 
-        if (! strcmp(reg_contents[inst->rs2 >>1], "")) {
-            st->vk = reg_names[inst->rs2 >>1];
+        if (!strcmp(reg_contents[inst->rs2 >> 1], "")) {
+            st->vk = reg_names[inst->rs2 >> 1];
         } else {
-            st->qk = reg_contents[inst->rs2 >>1];     
+            st->qk = reg_contents[inst->rs2 >> 1];
         }
     }
 }
@@ -117,7 +117,7 @@ PRIVATE void _print_registers(char* regs[], size_t num)
 
 void retire(Ctx* s, char* reg_contents[])
 {
-    for(size_t i = 0; i < s->program->count; i++) {
+    for (size_t i = 0; i < s->program->count; i++) {
         Inst* inst = &s->program->data[i];
 
         if (inst->writeback && !inst->retired && inst->writeback != s->cycle) {
@@ -143,7 +143,7 @@ void writeback(Ctx* s)
 
 void execute(Ctx* s)
 {
-    for(size_t i = 0; i < s->stations->count; i++) {
+    for (size_t i = 0; i < s->stations->count; i++) {
         Station* st = &s->stations->data[i];
 
         if (st->busy) {
@@ -166,16 +166,16 @@ void issue(Ctx* s, char* reg_names[], char* reg_contents[])
     Station* st;
     size_t i = 0;
 
-    while(i <= s->program->count) {
+    while (i <= s->program->count) {
         inst = NULL;
         st = NULL;
 
         if (s->program->data[i].issue == 0) {
             inst = &s->program->data[i];
-            
+
             st = _find_station(inst, s->stations);
             if (!st) {
-                continue;   
+                continue;
             }
 
             _fill_station(st, inst, reg_names, reg_contents);

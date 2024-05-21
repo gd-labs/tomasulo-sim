@@ -6,41 +6,41 @@
 #include "common.h"
 
 typedef enum {
-	Adder,
-	Multiplier,
-	Mem,
+    Adder,
+    Multiplier,
+    Mem,
 } OpType;
 
 typedef enum {
-	Load,
-	Store,
-	Add,
-	Sub,
-	Mul,
-	Div,
+    Load,
+    Store,
+    Add,
+    Sub,
+    Mul,
+    Div,
 } OpCode;
 
 typedef struct {
-	OpCode  op;
-	OpType  class;
-	char*   name;
-	
+    OpCode op;
+    OpType class;
+    char* name;
+
     int rs1;
-    int rs2; 
+    int rs2;
     int rd;
 
     char* text;
-    int   issue;
-    int   execute;
-    int   writeback;
-    int   retired;
-    int   remaining;
+    int issue;
+    int execute;
+    int writeback;
+    int retired;
+    int remaining;
 } Inst;
 
 typedef struct {
     size_t count;
     size_t capacity;
-    Inst*  data;
+    Inst* data;
 } InstList;
 
 InstList* instlist_new(int initial_size);

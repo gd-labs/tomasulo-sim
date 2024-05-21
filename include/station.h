@@ -5,10 +5,10 @@
 
 typedef struct {
     OpType type;
-    char*  name;
-    Inst*  op;
+    char* name;
+    Inst* op;
 
-    bool   busy;
+    bool busy;
 
     char* vj;
     char* vk;
@@ -17,8 +17,8 @@ typedef struct {
 } Station;
 
 typedef struct {
-    size_t   count;
-    size_t   capacity;
+    size_t count;
+    size_t capacity;
     Station* data;
 } SList;
 

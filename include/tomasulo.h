@@ -7,11 +7,11 @@
 
 typedef struct {
     InstList* program;
-    SList*    stations;
+    SList* stations;
 
-    int  cycle;
-    int  issue_width;
-    int  regfile_size;
+    int cycle;
+    int issue_width;
+    int regfile_size;
     bool complete;
 } Ctx;
 

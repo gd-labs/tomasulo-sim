@@ -1,15 +1,15 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 
 #include "common.h"
 #include "station.h"
 
 PRIVATE void _grow(SList* list)
 {
-    Station* new= realloc(list->data, (list->capacity << 1) * sizeof(Station));
+    Station* new = realloc(list->data, (list->capacity << 1) * sizeof(Station));
     if (!new) {
-        return;         
+        return;
     }
     list->capacity <<= 1;
     list->data = new;
@@ -32,7 +32,7 @@ PRIVATE Station _init_station(char* name, OpType type)
 
 SList* slist_new(int initial_size)
 {
-	SList* list = malloc(sizeof(SList));
+    SList* list = malloc(sizeof(SList));
     if (!list) {
         return NULL;
     }
@@ -65,13 +65,13 @@ int slist_add(SList* list, char* name, OpType type)
 
 void station_show(Station* st)
 {
-	char* busy = (st->busy == true) ? "yes" : "no";
-	char* op = (st->busy == true) ? st->op->name : "";
-	char* vj = (st->vj != NULL) ? st->vj : "";
-	char* vk = (st->vk != NULL) ? st->vk : "";
-	char* qj = (st->qj != NULL) ? st->qj : "";
-	char* qk = (st->qk != NULL) ? st->qk : "";
+    char* busy = (st->busy == true) ? "yes" : "no";
+    char* op = (st->busy == true) ? st->op->name : "";
+    char* vj = (st->vj != NULL) ? st->vj : "";
+    char* vk = (st->vk != NULL) ? st->vk : "";
+    char* qj = (st->qj != NULL) ? st->qj : "";
+    char* qk = (st->qk != NULL) ? st->qk : "";
 
-	printf("|%9s |%7s |%8s |%8s |%8s |%8s |%8s |\n", 
-			st->name, busy, op, vj, vk, qj, qk);
+    printf("|%9s |%7s |%8s |%8s |%8s |%8s |%8s |\n",
+        st->name, busy, op, vj, vk, qj, qk);
 }

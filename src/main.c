@@ -4,8 +4,8 @@
 
 #include "cli.h"
 #include "instruction.h"
-#include "station.h"
 #include "simulator.h"
+#include "station.h"
 
 #define REG_COUNT 8
 
@@ -14,9 +14,9 @@ int load_program(const char* path, InstList* list)
 #define MAXBUF 32
 
     char buf[MAXBUF];
-    char* line; 
+    char* line;
 
-    FILE *istream = fopen(path, "r");
+    FILE* istream = fopen(path, "r");
     if (!istream) {
         return -1;
     }
@@ -31,8 +31,8 @@ int load_program(const char* path, InstList* list)
 
 int main(int argc, char** argv)
 {
-	Cli cli = {0};
-	cli_parse(&cli, argc, argv);
+    Cli cli = {0};
+    cli_parse(&cli, argc, argv);
 
     InstList* program = instlist_new(10);
 
@@ -47,17 +47,17 @@ int main(int argc, char** argv)
     slist_add(stations, "Load1", Mem);
     slist_add(stations, "Load2", Mem);
 
-    char* regs[] = {"F0", "F2", "F4", "F6", "F8", "F10", "F12", "F14"};    
+    char* regs[] = {"F0", "F2", "F4", "F6", "F8", "F10", "F12", "F14"};
     char* reg_contents[] = {"", "", "", "", "", "", "", ""};
 
     Ctx context = {
-		.program = program,
-		.stations = stations,
-		.issue_width = 1,
-		.regfile_size = REG_COUNT,
-	};
+        .program = program,
+        .stations = stations,
+        .issue_width = 1,
+        .regfile_size = REG_COUNT,
+    };
 
-	char input;
+    char input;
     for (context.cycle = 1; context.cycle < 100; context.cycle++) {
         retire(&context, reg_contents);
         issue(&context, regs, reg_contents);
@@ -69,13 +69,12 @@ int main(int argc, char** argv)
         printf("[n]ext, [a]bort => ");
         scanf(" %c", &input);
 
-        switch(input) {
-		case 'n' :
-			break;
-		case 'a':
-			return 0;
+        switch (input) {
+        case 'n':
+            break;
+        case 'a':
+            return 0;
         }
         system("clear");
     }
 }
-
